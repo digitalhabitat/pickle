@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import time
+import os
 
 def number_to_alphanumeric ( string ):
     # do something
@@ -19,10 +20,13 @@ def number_to_alphanumeric ( string ):
             test = isNumAlpha(mylist, size)
             if test is not None:
                 if test is 1:
-                    time.sleep(.5)
+                    # time.sleep(.5)
                     index =  getAlpaIndex( mylist )
-                    print "".join(mylist)
-                    print "".join(mylist[index:])
+                    # print "".join(mylist[index:])
+                    if isEnglish( mylist[index:] ) is 1:
+                        print "Success "+ "".join( mylist[index:] )
+                        print "".join( mylist )
+                    ### if ^ is english
             continue;
         else:
             i = i - 1
@@ -235,14 +239,53 @@ def getAlpaIndex( mylist ):
             i += 1
     return i
 
+def isEnglish( mylist ):
+    # word bank source from:
+    # https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt
+    # http://www-personal.umich.edu/~jlawler/wordlist
+    flag = 0
+    i = 0
+    mystring = "".join(mylist)
 
-
+    THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+    absolute_path_2_file = os.path.join(THIS_FOLDER, 'wordlist.txt')
+    with open(absolute_path_2_file, "r") as words_file:
+        # get english word from alphabetize list
+        for line in words_file:
+            words = line.split()
+            try:
+                theirstring = words[0]
+            except IndexError:
+                return 0
+            # if word size does not match get new word
+            if len(mystring) is not len(theirstring):
+                continue
+            # compare characters from inedexed strings
+            while i < len(theirstring):
+                if mystring[i].lower() == theirstring[i]:
+                    #print mystring.lower() + "   comparing   " + theirstring
+                    # if thier is a positive match
+                    # flag for character matching
+                    # increment string index
+                    flag = 1
+                    i += 1;
+                else:
+                    # if there is no match
+                    # get new word
+                    # flag for characters not matching
+                    flag = 0
+                    break;
+            # end of while loop
+            if flag is 1 and mystring.lower() in theirstring:
+                # all characters matched
+                return 1
+        # end of new word loop
+        return 0
+# paiter 7246837
+# taxi 8294
+# insurance 467872623
+# chacha 242242
 text = "222"
-mylist = list(text)
-mylist[2]= "A"
-size = len(mylist)
-text = "".join(mylist)
-print "size of \"" + text + "\" is "  + str(size)
-
-text = "7246837"
-number_to_alphanumeric(text)
+# number_to_alphanumeric(text)
+# number_to_alphanumeric("8294")
+number_to_alphanumeric("18007246837")
