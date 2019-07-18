@@ -40,6 +40,7 @@ def find_all( mstring ):
                 newmlist = ['-'] * (len(mlist) * 2 - 1)
                 newmlist[0::2] = mlist
                 print("".join(newmlist))
+                return "".join(newmlist)
 
 def find_simple( mstring ):
 
