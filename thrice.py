@@ -21,7 +21,7 @@ const_hashTable = {'0':('0'),
         '8':('8','T','U','V'),
         '9':('9','W','X','Y','Z')}
 
-    def find_all( mstring ):
+def find_all( mstring ):
 
     # group 3 captures alphanumeric substring from phone number
     m = re.match(r'^(1)?(\d{3})?([A-Z0-9]*)$', "".join(mstring))
@@ -33,7 +33,7 @@ const_hashTable = {'0':('0'),
             if sublist:
                 mlist = list(m.groups())
                 # concatenate english separated sublist
-                mlist = mlist[:-1] + sublist
+                mlist = mlist[:-1] + list(sublist)
                 # Remove any None or empty elements from regrex groups
                 mlist = [x for x in mlist if x not in [None, ''] ]
                 # add dashes between elments
@@ -55,6 +55,7 @@ def find_simple( mstring ):
             mlist = ['-'] * (len(s) * 2 - 1)
             mlist[0::2] = s
             print("".join(list(mlist)))
+            return "".join(list(mlist))
 
 def num_to_alphanum ( input_list, index, output_list, size, func_to_call ):
 
@@ -118,6 +119,6 @@ for x in m:
     print(x)
     number_to_words(x)
 
-some_number = "72468377"
+some_number = words_to_number("PAINTERS")
 print("\nTesting all_wordifications of " + some_number + "\n")
 all_wordifications(some_number)
